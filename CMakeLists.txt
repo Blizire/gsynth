@@ -42,6 +42,7 @@ file(GLOB IMGUI_GLOB
 # Set source files
 set(SOURCES 
     src/main.cpp
+    include/main.h
     ${IMGUI_GLOB}
 )
 
