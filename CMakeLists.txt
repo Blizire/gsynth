@@ -41,8 +41,10 @@ file(GLOB IMGUI_GLOB
 
 # Set source files
 set(SOURCES 
+    src/synthwindow.cpp
     src/main.cpp
     include/main.h
+    include/synthwindow.h
     ${IMGUI_GLOB}
 )
 

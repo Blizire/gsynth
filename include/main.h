@@ -11,4 +11,5 @@
 #endif
 #include <GLFW/glfw3.h> // Will drag system OpenGL headers
 #include <winuser.h>
+#include "synthwindow.h"
 #endif

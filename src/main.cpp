@@ -5,7 +5,6 @@ static void glfw_error_callback(int error, const char* description)
     fprintf(stderr, "GLFW Error %d: %s\n", error, description);
 }
 
-// Main code
 int WinMain(HINSTANCE hIstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 {
     glfwSetErrorCallback(glfw_error_callback);
@@ -37,19 +36,8 @@ int WinMain(HINSTANCE hIstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nS
 
     // Setup Window hints to affect window appeareance
     glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_TRUE);
-    glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
-    glfwWindowHint(GLFW_DECORATED, GLFW_FALSE);
-    glfwWindowHint(GLFW_FLOATING, GLFW_TRUE);
-    RECT *rect;
-    rect = (RECT *) calloc(1, sizeof(RECT));
-    SystemParametersInfoA(SPI_GETWORKAREA, 0, rect, 0);
-    int width = rect->right;
-    int height = rect->bottom;
-    free(rect);
-    // Create window with graphics context
-    // NOTE WILL NEED TO SET DIMENSIONS TO SCREEN SIZE
-    // WILL ALSO NEED TO ADD MONITOR SELECTION SUPPORT
-    GLFWwindow* window = glfwCreateWindow(width, height, "Grug Synth", nullptr, nullptr);
+
+    GLFWwindow* window = glfwCreateWindow(1024, 720, "Grug Synth", nullptr, nullptr);
     if (window == nullptr)
         return 1;
 
@@ -73,6 +61,7 @@ int WinMain(HINSTANCE hIstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nS
     // window states
     bool show_demo_window = false;
     bool show_another_window = false;
+    bool show_synth_window = true;
 
     // set background for window
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 0);
@@ -81,53 +70,16 @@ int WinMain(HINSTANCE hIstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nS
     while (!glfwWindowShouldClose(window))
     {
         glfwPollEvents();
-
-        // Start the Dear ImGui frame
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
-        if (show_demo_window)
-            ImGui::ShowDemoWindow(&show_demo_window);
+        //if (show_demo_window)
+        //    ImGui::ShowDemoWindow(&show_demo_window);
 
+        if (show_synth_window)
         {
-            static float f = 0.0f;
-            static int counter = 0;
-
-            /*
-            RECT *rect;
-            rect = (RECT *) calloc(1, sizeof(RECT));
-            SystemParametersInfoA(SPI_GETWORKAREA, 0, rect, 0);
-            ImGui::Text("width = %ld", rect->right);
-            ImGui::Text("height = %ld", rect->bottom);
-            free(rect);
-            */
-
-            ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
-
-            ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
-            ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
-            ImGui::Checkbox("Another Window", &show_another_window);
-
-            ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-            ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
-
-            if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
-                counter++;
-            ImGui::SameLine();
-            ImGui::Text("counter = %d", counter);
-
-            ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
-            ImGui::End();
-        }
-
-        if (show_another_window)
-        {
-            ImGui::Begin("Another Window", &show_another_window);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
-            ImGui::Text("Hello from another window!");
-            if (ImGui::Button("Close Me"))
-                show_another_window = false;
-            ImGui::End();
+            ShowSynthWindow();
         }
 
         // Rendering
