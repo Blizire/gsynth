@@ -39,11 +39,17 @@ int WinMain(HINSTANCE hIstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nS
     glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_TRUE);
     glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
     glfwWindowHint(GLFW_DECORATED, GLFW_FALSE);
-
+    glfwWindowHint(GLFW_FLOATING, GLFW_TRUE);
+    RECT *rect;
+    rect = (RECT *) calloc(1, sizeof(RECT));
+    SystemParametersInfoA(SPI_GETWORKAREA, 0, rect, 0);
+    int width = rect->right;
+    int height = rect->bottom;
+    free(rect);
     // Create window with graphics context
     // NOTE WILL NEED TO SET DIMENSIONS TO SCREEN SIZE
     // WILL ALSO NEED TO ADD MONITOR SELECTION SUPPORT
-    GLFWwindow* window = glfwCreateWindow(1280, 720, "Grug Synth", nullptr, nullptr);
+    GLFWwindow* window = glfwCreateWindow(width, height, "Grug Synth", nullptr, nullptr);
     if (window == nullptr)
         return 1;
 
@@ -87,6 +93,15 @@ int WinMain(HINSTANCE hIstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nS
         {
             static float f = 0.0f;
             static int counter = 0;
+
+            /*
+            RECT *rect;
+            rect = (RECT *) calloc(1, sizeof(RECT));
+            SystemParametersInfoA(SPI_GETWORKAREA, 0, rect, 0);
+            ImGui::Text("width = %ld", rect->right);
+            ImGui::Text("height = %ld", rect->bottom);
+            free(rect);
+            */
 
             ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
 
