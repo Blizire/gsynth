@@ -36,16 +36,17 @@ int WinMain(HINSTANCE hIstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nS
 #endif
 
     // Setup Window hints to affect window appeareance
-
     glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_TRUE);
     glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
     glfwWindowHint(GLFW_DECORATED, GLFW_FALSE);
-    //glfwWindowHint(GLFW_DECORATED, GLFW_FALSE); 
 
     // Create window with graphics context
+    // NOTE WILL NEED TO SET DIMENSIONS TO SCREEN SIZE
+    // WILL ALSO NEED TO ADD MONITOR SELECTION SUPPORT
     GLFWwindow* window = glfwCreateWindow(1280, 720, "Grug Synth", nullptr, nullptr);
     if (window == nullptr)
         return 1;
+
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1); // Enable vsync
 
@@ -59,18 +60,18 @@ int WinMain(HINSTANCE hIstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nS
     // Setup Dear ImGui style
     ImGui::StyleColorsDark();
 
-    // Edit colors of imgui windows only
-    ImGuiStyle* style = &ImGui::GetStyle();
-    ImVec4* colors = style->Colors;
-    colors[ImGuiCol_WindowBg] = ImVec4(0.06f, 0.06f, 0.06f, 0.94f);
-
     // Setup Platform/Renderer backends
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init(glsl_version);
+
+    // window states
     bool show_demo_window = false;
     bool show_another_window = false;
+
+    // set background for window
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 0);
 
+    // Main loop for window event handling
     while (!glfwWindowShouldClose(window))
     {
         glfwPollEvents();
@@ -80,11 +81,9 @@ int WinMain(HINSTANCE hIstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nS
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
-        // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
         if (show_demo_window)
             ImGui::ShowDemoWindow(&show_demo_window);
 
-        // 2. Show a simple window that we create ourselves. We use a Begin/End pair to create a named window.
         {
             static float f = 0.0f;
             static int counter = 0;
@@ -107,7 +106,6 @@ int WinMain(HINSTANCE hIstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nS
             ImGui::End();
         }
 
-        // 3. Show another simple window.
         if (show_another_window)
         {
             ImGui::Begin("Another Window", &show_another_window);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
