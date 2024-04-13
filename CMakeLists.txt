@@ -10,12 +10,14 @@ set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 set(glfw3_DIR libs/glfw/CMake)
 
 add_subdirectory(libs/glfw/)
+add_subdirectory(libs/portaudio/)
 
 # Include directories
 include_directories(${PROJECT_SOURCE_DIR}/include)
 include_directories(${PROJECT_SOURCE_DIR}/libs/glfw/include)
 include_directories(${PROJECT_SOURCE_DIR}/libs/imgui)
 include_directories(${PROJECT_SOURCE_DIR}/libs/imgui/backends)
+include_directories(${PROJECT_SOURCE_DIR}/libs/portaudio/include)
 
 # ImGui
 set(IMGUI_PATH libs/imgui)
@@ -43,8 +45,11 @@ file(GLOB IMGUI_GLOB
 set(SOURCES 
     src/synthwindow.cpp
     src/main.cpp
+    src/sound.cpp
+    include/sound.h
     include/main.h
     include/synthwindow.h
+
     ${IMGUI_GLOB}
 )
 
@@ -52,4 +57,4 @@ set(SOURCES
 add_executable(${PROJECT_NAME} WIN32 ${SOURCES})
 
 # Link GLFW library
-target_link_libraries(${PROJECT_NAME} ${OPENGL_gl_LIBRARY} glfw)
+target_link_libraries(${PROJECT_NAME} ${OPENGL_gl_LIBRARY} glfw PortAudio)

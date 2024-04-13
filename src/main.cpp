@@ -66,6 +66,9 @@ int WinMain(HINSTANCE hIstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nS
     // set background for window
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 0);
 
+    // portaudio init
+    PaPlaySound();
+
     // Main loop for window event handling
     while (!glfwWindowShouldClose(window))
     {

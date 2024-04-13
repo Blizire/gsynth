@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include "imgui.h"
 #include <math.h>
+#include "portaudio.h"
 
 void ShowSynthWindow();
 
